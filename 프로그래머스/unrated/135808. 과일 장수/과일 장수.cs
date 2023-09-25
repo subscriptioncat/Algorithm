@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 public class Solution {
     public int solution(int k, int m, int[] score) {
+        int maxIndex = score.Length / m;
         int answer = 0;
-        List<int> list = score.ToList();
-        list.Sort((n1, n2) => n2.CompareTo(n1));
-        for(int i = m;  i <=  list.Count; i = i + m)
+        score = score.OrderByDescending(n => n).ToArray();
+        for (int i = 1; i <= maxIndex; i++)
         {
-            answer += m * list[i - 1];
+            int nowMinNumber = score[i * m - 1];
+            if(nowMinNumber == 1)
+            {
+                answer += 1 * m * (maxIndex - (i - 1));
+                break;
+            }
+            answer += score[i * m - 1] * m;
         }
         return answer;
     }

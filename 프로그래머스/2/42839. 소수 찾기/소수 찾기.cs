@@ -42,12 +42,6 @@ public class Solution {
         return hs.Count;
     }
 
-    public void PrintHashSet()
-    {
-        foreach (int i in hs)
-            Console.WriteLine(i);
-    }
-
     public void Filtering()
     {
         int max = hs.Max();

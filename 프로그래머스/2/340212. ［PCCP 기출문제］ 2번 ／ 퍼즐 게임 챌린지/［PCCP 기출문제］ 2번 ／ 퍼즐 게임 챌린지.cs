@@ -3,30 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class Solution {
-    public int solution(int[] diffs, int[] times, long limit) {
-        int level = 0;
-        int diffsCount = diffs.Count();
-        long time = long.MaxValue;
+    int[] _diffs;
+    int[] _times;
+    long _limit;
+    int _diffsCount;
+
+    public int solution(int[] diffs, int[] times, long limit)
+    {
+        _diffs = diffs;
+        _times = times;
+        _limit = limit;
+        _diffsCount = diffs.Count();
+
+        return BinarySearch(1, diffs.Max());
+    }
+
+    private int BinarySearch(int low, int high)
+    {
+        if (low > high)
+            return low;
+
+        int mid = (low + high) / 2;
+
+        if (CheckingLevelUpAndDown(mid))
+            return BinarySearch(low, mid - 1);
+        else
+            return BinarySearch(mid + 1, high);
+    }
+
+    private bool CheckingLevelUpAndDown(int level)
+    {
+        long time_curr = 0;
         int time_prev = 0;
 
-        while(limit < time)
+        for (int i = 0; i < _diffsCount; i++)
         {
-            level++;
-            time = 0;
-            time_prev = 0;
-            for (int i = 0; i < diffsCount; i++)
-            {
-                if (diffs[i] > level)
-                {
-                    time += (time_prev + times[i]) * (diffs[i] - level) + times[i];
-                }
-                else
-                {
-                    time += times[i];
-                }
-                time_prev = times[i];
-            }
+            if (_diffs[i] > level)
+                time_curr += (time_prev + _times[i]) * (_diffs[i] - level) + _times[i];
+            else
+                time_curr += _times[i];
+
+            time_prev = _times[i];
         }
-        return level;
+
+        return time_curr > _limit ? false : true;
     }
 }

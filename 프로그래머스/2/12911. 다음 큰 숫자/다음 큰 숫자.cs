@@ -7,7 +7,7 @@ class Solution
         int oneCount = Convert.ToString(n,2).Count(x => x == '1');
         while (true)
         {
-            if (Convert.ToString(++n, 2).ToString().Count(x => x == '1') == oneCount)
+            if (Convert.ToString(++n, 2).Count(x => x == '1') == oneCount)
                 break;
         }
 
